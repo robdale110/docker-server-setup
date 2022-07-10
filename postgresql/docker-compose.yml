@@ -11,8 +11,10 @@ services:
       POSTGRES_PASSWORD: <password>
     volumes:
       - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
+      - postgresql-data:/var/lib/postgresql/data
 
 volumes:
   postgresql:
-  postgresql_data:
+    external: true
+  postgresql-data:
+    external: true
