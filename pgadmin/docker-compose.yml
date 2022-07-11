@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    networks:
+      - frontend
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: rob@robdale.me.uk
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.robdale.me.uk`)"
+      - "traefik.http.routers.pgadmin.entrypoints=websecure"
+      - "traefik.http.routers.pgadmin.tls.certresolver=letsencrypt"
+
+volumes:
+  pgadmin-data:
+    external: true
+
+networks:
+  frontend:
+    external: true
