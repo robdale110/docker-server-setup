@@ -4,12 +4,21 @@ services:
   grafana:
     image: grafana/grafana-oss:latest
     container_name: grafana
-    ports:
-      - "3000:3000"
+    networks:
+      - frontend
     volumes:
       - grafana-data:/var/lib/grafana
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.librespeed.rule=Host(`grafana.robdale.me.uk`)"
+      - "traefik.http.routers.librespeed.entrypoints=websecure"
+      - "traefik.http.routers.librespeed.tls.certresolver=letsencrypt"
 
 volumes:
   grafana-data:
+    external: true
+
+networks:
+  frontend:
     external: true
