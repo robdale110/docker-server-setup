@@ -11,9 +11,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.librespeed.rule=Host(`grafana.robdale.me.uk`)"
-      - "traefik.http.routers.librespeed.entrypoints=websecure"
-      - "traefik.http.routers.librespeed.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.robdale.me.uk`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
 
 volumes:
   grafana-data:
