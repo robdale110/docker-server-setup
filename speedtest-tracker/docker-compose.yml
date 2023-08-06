@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  speedtest-tracker:
+    container_name: speedtest-tracker
+    image: ghcr.io/alexjustesen/speedtest-tracker:latest
+    networks:
+      - frontend
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - speedtest-config:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.speedtest.rule=Host(`speedtest-tracker.robdale.me.uk`)"
+      - "traefik.http.routers.speedtest.entrypoints=websecure"
+      - "traefik.http.routers.speedtest.tls.certresolver=letsencrypt"
+    restart: unless-stopped
+
+volumes:
+  speedtest-config:
+    external: true
+
+networks:
+  frontend:
+    external: true
